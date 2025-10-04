@@ -1,0 +1,71 @@
+{
+    allAccounts{
+        dateAdd
+        firstName
+        sex
+        dateOfBirth
+        role
+        city
+        country
+    }
+}
+
+{
+    "data": {
+        "allAccounts": [
+            {
+                "dateAdd": "2025-10-04T13:17:22.754861+00:00",
+                "firstName": "Malik",
+                "userIdentifier": "U5746",
+                "sex": "M",
+                "dateOfBirth": "1994-08-14",
+                "role": "TEACHER",
+                "city": "Alabama",
+                "country": "Arizona",
+                "isVerified": false
+            }
+        ]
+    }
+}
+
+{
+    account{
+        dateAdd
+        firstName
+        userIdentifier
+        sex
+        dateOfBirth
+        role
+        city
+        country
+        email
+        phone
+        isVerified
+        isPwdChanged
+        user{
+            id
+        }
+    }
+}
+
+{
+    "data": {
+        "account": {
+            "dateAdd": "2025-10-04T13:17:22.754861+00:00",
+            "firstName": "Malik",
+            "userIdentifier": "U92989",
+            "sex": "M",
+            "dateOfBirth": "2025-10-02",
+            "role": "ADMIN",
+            "city": null,
+            "country": null,
+            "email": null,
+            "phone": null,
+            "isVerified": false,
+            "isPwdChanged": false,
+            "user": {
+                "id": "1"
+            }
+        }
+    }
+}
