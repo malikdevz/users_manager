@@ -1,29 +1,30 @@
 ````markdown
-# 📘 API GraphQL – Gestion des Comptes Utilisateurs
+# 📘 GraphQL API – User Account Management
 
-Ce document décrit toutes les **requêtes** et **mutations** disponibles dans l’API GraphQL.  
-Chaque exemple est donné au **format JSON** compatible avec **Postman**, **Insomnia** ou **GraphiQL**.
+This document describes all available **queries** and **mutations** in the GraphQL API.  
+Each example is provided in **JSON format**, compatible with **Postman**, **Insomnia**, or **GraphiQL**.
 
 ---
 
-## 🔐 Authentification JWT
+## 🔐 JWT Authentication
 
-### 1. Obtenir un token
+### 1. Get a Token
+
 ```json
 {
-  "query": "mutation { tokenAuth(username: \"USER_IDENTIFIANT\", password: \"PASSWORD\") { token } }"
+  "query": "mutation { tokenAuth(username: \"USER_IDENTIFIER\", password: \"PASSWORD\") { token } }"
 }
 ````
 
-### 2. Rafraîchir un token
+### 2. Refresh a Token
 
 ```json
 {
-  "query": "mutation { refreshToken(token: \"TOKEN_ACTUEL\") { token } }"
+  "query": "mutation { refreshToken(token: \"CURRENT_TOKEN\") { token } }"
 }
 ```
 
-### 3. Vérifier un token
+### 3. Verify a Token
 
 ```json
 {
@@ -35,7 +36,7 @@ Chaque exemple est donné au **format JSON** compatible avec **Postman**, **Inso
 
 ## 🧾 QUERIES
 
-### 1. Récupérer son propre compte
+### 1. Get Your Own Account
 
 ```json
 {
@@ -43,7 +44,7 @@ Chaque exemple est donné au **format JSON** compatible avec **Postman**, **Inso
 }
 ```
 
-**Résultat attendu :**
+**Expected Result:**
 
 ```json
 {
@@ -54,7 +55,7 @@ Chaque exemple est donné au **format JSON** compatible avec **Postman**, **Inso
       "email": "david@example.com",
       "role": "STUDENT",
       "city": "Goma",
-      "country": "RDC",
+      "country": "DRC",
       "phone": "+243970000000",
       "isVerified": false
     }
@@ -62,14 +63,14 @@ Chaque exemple est donné au **format JSON** compatible avec **Postman**, **Inso
 }
 ```
 
-**Erreurs possibles :**
+**Possible Errors:**
 
-* `INVALID_USER_IDENTIFIANT`
+* `INVALID_USER_IDENTIFIER`
 * `Authentication credentials were not provided.`
 
 ---
 
-### 2. Récupérer tous les comptes (admin uniquement)
+### 2. Get All Accounts (Admin Only)
 
 ```json
 {
@@ -77,7 +78,7 @@ Chaque exemple est donné au **format JSON** compatible avec **Postman**, **Inso
 }
 ```
 
-**Résultat attendu :**
+**Expected Result:**
 
 ```json
 {
@@ -102,20 +103,20 @@ Chaque exemple est donné au **format JSON** compatible avec **Postman**, **Inso
 
 ---
 
-### 3. Récupérer un compte par identifiant
+### 3. Get an Account by Identifier
 
 ```json
 {
-  "query": "query { accountByIdentifiant(userIdentifiant: \"USR12345\") { firstName email role } }"
+  "query": "query { accountByIdentifier(userIdentifier: \"USR12345\") { firstName email role } }"
 }
 ```
 
-**Résultat attendu :**
+**Expected Result:**
 
 ```json
 {
   "data": {
-    "accountByIdentifiant": {
+    "accountByIdentifier": {
       "firstName": "David",
       "email": "david@example.com",
       "role": "STUDENT"
@@ -124,7 +125,7 @@ Chaque exemple est donné au **format JSON** compatible avec **Postman**, **Inso
 }
 ```
 
-**Erreur possible :**
+**Possible Error:**
 
 * `ACCOUNT_DOESNT_EXIST`
 
@@ -132,15 +133,15 @@ Chaque exemple est donné au **format JSON** compatible avec **Postman**, **Inso
 
 ## ⚙️ MUTATIONS
 
-### 1. Créer un compte
+### 1. Create an Account
 
 ```json
 {
-  "query": "mutation { createAccount(firstName: \"David\", sex: \"M\", dateOfBirth: \"1998-04-21\", password: \"StrongP@ss123\", role: \"STUDENT\", email: \"david@example.com\", city: \"Goma\", country: \"RDC\", phone: \"+243970000000\") { account { userIdentifier firstName role email isVerified } } }"
+  "query": "mutation { createAccount(firstName: \"David\", sex: \"M\", dateOfBirth: \"1998-04-21\", password: \"StrongP@ss123\", role: \"STUDENT\", email: \"david@example.com\", city: \"Goma\", country: \"DRC\", phone: \"+243970000000\") { account { userIdentifier firstName role email isVerified } } }"
 }
 ```
 
-**Résultat attendu :**
+**Expected Result:**
 
 ```json
 {
@@ -158,19 +159,19 @@ Chaque exemple est donné au **format JSON** compatible avec **Postman**, **Inso
 }
 ```
 
-**Erreurs possibles :**
+**Possible Errors:**
 
 * `EMAIL_REQUIRED`
 * `PHONE_REQUIRED`
 * `CITY_REQUIRED`
 * `COUNTRY_REQUIRED`
-* `EMAIL_ALREAD_TEKEN`
+* `EMAIL_ALREADY_TAKEN`
 * `INVALID_EMAIL`
 * `WEAK_PASSWORD`
 
 ---
 
-### 2. Mettre à jour son profil
+### 2. Update Your Profile
 
 ```json
 {
@@ -178,7 +179,7 @@ Chaque exemple est donné au **format JSON** compatible avec **Postman**, **Inso
 }
 ```
 
-**Résultat attendu :**
+**Expected Result:**
 
 ```json
 {
@@ -194,14 +195,14 @@ Chaque exemple est donné au **format JSON** compatible avec **Postman**, **Inso
 }
 ```
 
-**Erreurs possibles :**
+**Possible Errors:**
 
 * `USER_ACCOUNT_NOT_EXIST`
 * `INVALID_EMAIL`
 
 ---
 
-### 3. Vérifier un compte
+### 3. Verify an Account
 
 ```json
 {
@@ -209,28 +210,28 @@ Chaque exemple est donné au **format JSON** compatible avec **Postman**, **Inso
 }
 ```
 
-**Résultat attendu :**
+**Expected Result:**
 
 ```json
 { "data": { "verifyAccount": { "isVerified": true } } }
 ```
 
-**Erreurs possibles :**
+**Possible Errors:**
 
 * `CODE_INVALID`
 * `CODE_EXPIRED`
 
 ---
 
-### 4. Demander un code de vérification
+### 4. Request a Verification Code
 
 ```json
 {
-  "query": "mutation { requestCode(emailTitle: \"Vérification de compte\") { isCodeSent } }"
+  "query": "mutation { requestCode(emailTitle: \"Account Verification\") { isCodeSent } }"
 }
 ```
 
-**Résultat attendu :**
+**Expected Result:**
 
 ```json
 { "data": { "requestCode": { "isCodeSent": true } } }
@@ -238,7 +239,7 @@ Chaque exemple est donné au **format JSON** compatible avec **Postman**, **Inso
 
 ---
 
-### 5. Changer son mot de passe
+### 5. Change Your Password
 
 ```json
 {
@@ -246,19 +247,19 @@ Chaque exemple est donné au **format JSON** compatible avec **Postman**, **Inso
 }
 ```
 
-**Résultat attendu :**
+**Expected Result:**
 
 ```json
 { "data": { "changePassword": { "isPwdChanged": true } } }
 ```
 
-**Erreur possible :**
+**Possible Error:**
 
 * `WRONG_CURRENT_PASSWORD`
 
 ---
 
-### 6. Réinitialiser son mot de passe
+### 6. Reset Your Password
 
 ```json
 {
@@ -266,13 +267,13 @@ Chaque exemple est donné au **format JSON** compatible avec **Postman**, **Inso
 }
 ```
 
-**Résultat attendu :**
+**Expected Result:**
 
 ```json
 { "data": { "resetPassword": { "isPwdReset": true } } }
 ```
 
-**Erreurs possibles :**
+**Possible Errors:**
 
 * `USERNAME_DOESNT_EXIST`
 * `CODE_INVALID`
@@ -280,7 +281,7 @@ Chaque exemple est donné au **format JSON** compatible avec **Postman**, **Inso
 
 ---
 
-### 7. Supprimer son propre compte
+### 7. Delete Your Own Account
 
 ```json
 {
@@ -288,34 +289,34 @@ Chaque exemple est donné au **format JSON** compatible avec **Postman**, **Inso
 }
 ```
 
-**Résultat attendu :**
+**Expected Result:**
 
 ```json
 { "data": { "deleteAccount": { "isDeleted": true } } }
 ```
 
-**Erreurs possibles :**
+**Possible Errors:**
 
 * `WRONG_PASSWORD`
 * `DELETE_ACCOUNT_ERROR`
 
 ---
 
-### 8. Supprimer un compte en tant qu’admin
+### 8. Delete an Account as Admin
 
 ```json
 {
-  "query": "mutation { adminDeleteAccount(accIdentifiant: \"USR12345\", adminPassword: \"AdminPass123\") { isDeleted } }"
+  "query": "mutation { adminDeleteAccount(accIdentifier: \"USR12345\", adminPassword: \"AdminPass123\") { isDeleted } }"
 }
 ```
 
-**Résultat attendu :**
+**Expected Result:**
 
 ```json
 { "data": { "adminDeleteAccount": { "isDeleted": true } } }
 ```
 
-**Erreurs possibles :**
+**Possible Errors:**
 
 * `WRONG_PASSWORD`
 * `OPERATION_DENIED`
@@ -323,36 +324,36 @@ Chaque exemple est donné au **format JSON** compatible avec **Postman**, **Inso
 
 ---
 
-## 🧠 Notes techniques
+## 🧠 Technical Notes
 
-* Toutes les requêtes protégées nécessitent un **header JWT** :
+* All protected queries require a **JWT header**:
 
   ```
-  Authorization: JWT <votre_token>
+  Authorization: JWT <your_token>
   ```
-* Les identifiants (`userIdentifier`) sont générés automatiquement.
-* Les validations des champs se font via les fonctions du module `tools.py`.
+* Identifiers (`userIdentifier`) are generated automatically.
+* Field validation is handled via functions in the `tools.py` module.
 
 ---
 
-## 🧾 Codes d’erreur communs
+## 🧾 Common Error Codes
 
-| Code                       | Description                           |
-| -------------------------- | ------------------------------------- |
-| `INVALID_USER_IDENTIFIANT` | Profil introuvable                    |
-| `ACCOUNT_DOESNT_EXIST`     | Compte inexistant                     |
-| `EMAIL_REQUIRED`           | Email obligatoire pour enseignant     |
-| `PHONE_REQUIRED`           | Téléphone obligatoire pour enseignant |
-| `CITY_REQUIRED`            | Ville obligatoire pour enseignant     |
-| `COUNTRY_REQUIRED`         | Pays obligatoire pour enseignant      |
-| `EMAIL_ALREAD_TEKEN`       | Email déjà utilisé                    |
-| `USER_ACCOUNT_NOT_EXIST`   | Profil non trouvé                     |
-| `WRONG_CURRENT_PASSWORD`   | Ancien mot de passe incorrect         |
-| `WRONG_PASSWORD`           | Mot de passe erroné                   |
-| `DELETE_ACCOUNT_ERROR`     | Erreur lors de la suppression         |
-| `CODE_INVALID`             | Code de vérification invalide         |
-| `CODE_EXPIRED`             | Code expiré                           |
-| `OPERATION_DENIED`         | Action refusée (non admin)            |
+| Code                      | Description                  |
+| ------------------------- | ---------------------------- |
+| `INVALID_USER_IDENTIFIER` | Profile not found            |
+| `ACCOUNT_DOESNT_EXIST`    | Account does not exist       |
+| `EMAIL_REQUIRED`          | Email required for teacher   |
+| `PHONE_REQUIRED`          | Phone required for teacher   |
+| `CITY_REQUIRED`           | City required for teacher    |
+| `COUNTRY_REQUIRED`        | Country required for teacher |
+| `EMAIL_ALREADY_TAKEN`     | Email already used           |
+| `USER_ACCOUNT_NOT_EXIST`  | Profile not found            |
+| `WRONG_CURRENT_PASSWORD`  | Wrong current password       |
+| `WRONG_PASSWORD`          | Incorrect password           |
+| `DELETE_ACCOUNT_ERROR`    | Error deleting account       |
+| `CODE_INVALID`            | Invalid verification code    |
+| `CODE_EXPIRED`            | Verification code expired    |
+| `OPERATION_DENIED`        | Action denied (not admin)    |
 
 ---
 
@@ -365,7 +366,7 @@ Chaque exemple est donné au **format JSON** compatible avec **Postman**, **Inso
 
 ---
 
-© 2025 – API Utilisateurs | Développé avec ❤️ et GraphQL.
+© 2025 – User API | Built with ❤️ and GraphQL.
 
 ```
 ```
