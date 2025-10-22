@@ -41,9 +41,17 @@ INSTALLED_APPS = [
     'app_core',
     "graphene_django",
     "graphql_jwt.refresh_token.apps.RefreshTokenConfig",
+    'corsheaders',
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://127.0.0.1:5500", # Exemple si vous utilisez Live Server sur le port 5500
+    "http://localhost:5500",  # Alternative pour Live Server
+    "null",                  # Important pour autoriser les requêtes depuis file://
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -98,12 +106,28 @@ GRAPHQL_JWT = {
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default':{
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'us_manager',
+            'USER': 'us_admin',
+            'PASSWORD': '123@CoKe@',
+            'HOST': '127.0.0.1',
+            'PORT': '3306',
+            'OPTIONS': {
+                'charset': 'utf8mb4',
+                'init_command': "SET NAMES 'utf8mb4'"
+            }
+        }
+    }
 
 
 # Password validation
